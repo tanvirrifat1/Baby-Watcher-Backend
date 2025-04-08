@@ -1,0 +1,77 @@
+
+//video req
+
+// const createVideoReqToDb = async (payload: IVideoReq) => {
+//   const isConnection = await Connection.findOne({
+//     parentId: payload.parentId,
+//   });
+
+//   if (!isConnection) {
+//     throw new ApiError(
+//       StatusCodes.BAD_REQUEST,
+//       'You are not connected with any babysitter'
+//     );
+//   }
+
+//   const isSubs = await User.findById(payload.parentId);
+
+//   if (!isSubs || isSubs.subscription === false) {
+//     throw new ApiError(
+//       StatusCodes.BAD_REQUEST,
+//       'You are not subscribed to any plan'
+//     );
+//   }
+
+//   const isPurses = await Subscriptation.findOne({ userId: payload.parentId });
+
+//   if (!isPurses) {
+//     throw new ApiError(StatusCodes.BAD_REQUEST, 'Subscription not found');
+//   }
+
+//   // ✅ Check if subscription is expired
+//   const currentDate = new Date();
+//   if (new Date(isPurses.expiryDate) < currentDate) {
+//     throw new ApiError(
+//       StatusCodes.BAD_REQUEST,
+//       'Your subscription has expired'
+//     );
+//   }
+
+//   // ✅ Normalize plan name check
+//   const planName = isPurses.packageName.toLowerCase();
+
+//   // ✅ Check if the user has an existing request
+//   let existingReq = await VideoReq.findOne({
+//     babySitterId: isConnection.babySitterId,
+//     parentId: isConnection.parentId,
+//   });
+
+//   if (planName.includes('standard')) {
+//     // ✅ Limit requests to 3 per day for Standard Plan
+//     if (existingReq && existingReq.count >= 3) {
+//       throw new ApiError(
+//         StatusCodes.BAD_REQUEST,
+//         'You have reached the daily limit of 3 video requests'
+//       );
+//     }
+//   }
+
+//   if (existingReq) {
+//     existingReq.count += 1;
+//     await existingReq.save();
+//   } else {
+//     existingReq = await VideoReq.create({
+//       babySitterId: isConnection.babySitterId,
+//       parentId: isConnection.parentId,
+//       count: 1,
+//     });
+//   }
+
+//   const data = {
+//     text: `You have a new video request`,
+//     receiver: isConnection.parentId,
+//   };
+//   await sendNotifications(data);
+
+//   return existingReq;
+// };

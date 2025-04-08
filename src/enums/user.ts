@@ -1,0 +1,5 @@
+export enum USER_ROLES {
+  ADMIN = 'ADMIN',
+  BABY_SITTER = 'BABY_SITTER',
+  PARENT = 'PARENT',
+}
