@@ -7,13 +7,13 @@ const router = express.Router();
 
 router.post(
   '/send',
-  auth(USER_ROLES.BABY_SITTER),
+  auth(USER_ROLES.BABY_SITTER, USER_ROLES.PARENT),
   SleepAlertController.sendToAlert
 );
 
 router.post(
   '/save',
-  auth(USER_ROLES.BABY_SITTER),
+  auth(USER_ROLES.BABY_SITTER, USER_ROLES.PARENT),
   SleepAlertController.saveAlertToDB
 );
 

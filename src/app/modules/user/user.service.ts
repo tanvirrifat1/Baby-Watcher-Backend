@@ -12,10 +12,10 @@ import unlinkFile from '../../../shared/unlinkFile';
 import { Connection } from '../connection/connection.model';
 import { IConnection } from '../connection/connection.interface';
 import generateUniqueKey from './user.constant';
+import { UniqueKey } from '../UniqueKey/UniqueKey.model';
 
 const createParentFromDb = async (payload: IUser) => {
   payload.role = USER_ROLES.PARENT;
-
   // Generate unique key before creating user
   const uniqueKey = await generateUniqueKey();
   payload.uniqueKey = uniqueKey;
@@ -24,6 +24,17 @@ const createParentFromDb = async (payload: IUser) => {
 
   if (!result) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
+  }
+
+  const value = {
+    uniqueKey: uniqueKey,
+    userId: result._id,
+  };
+
+  const uniqueKeyResult = await UniqueKey.create(value);
+
+  if (!uniqueKeyResult) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "Unique key doesn't exist!");
   }
 
   const otp = generateOTP();
