@@ -4,27 +4,6 @@ import sendResponse from '../../../shared/sendResponse';
 import { VideoService } from './video.service';
 import { S3File } from './video.constant';
 
-// const sendVideo = catchAsync(async (req, res) => {
-//   const babySitterId = req.user.id;
-
-//   const file = req.file as unknown as S3File;
-
-//   const value = {
-//     ...req.body,
-//     babySitterId,
-//     video: file?.location,
-//   };
-
-//   const result = await VideoService.sendVideo(value);
-
-//   sendResponse(res, {
-//     success: true,
-//     statusCode: StatusCodes.OK,
-//     message: 'Video sent successfully',
-//     data: result,
-//   });
-// });
-
 const sendVideo = catchAsync(async (req, res) => {
   const babySitterId = req.user.id;
 
